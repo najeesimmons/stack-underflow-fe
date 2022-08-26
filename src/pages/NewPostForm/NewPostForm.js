@@ -16,9 +16,10 @@ const NewPostForm = (props) => {
     event.preventDefault();
     createPosts(newForm);
     setNewForm({
-      name: "",
-      image: "",
       title: "",
+      body: "",
+      image: "",
+      comments: []
     });
   };
 

@@ -12,7 +12,7 @@ function App() {
 
   const getPosts = async () => {
     try {
-      const response = await fetch(`${URL} + posts/`);
+      const response = await fetch(`${URL}posts/`);
       const data = await response.json();
       console.log(data);
       setPosts(data);
@@ -23,7 +23,7 @@ function App() {
 
   const createPosts = async (post) => {
     try {
-      await fetch(`${URL} + posts/`, {
+      await fetch(`${URL}posts/`, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -39,7 +39,7 @@ function App() {
   useEffect(() => getPosts, []);
 
   const updatePosts = async (post, id) => {
-    await fetch(URL + id, {
+    await fetch(`${URL}posts/${id}`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +50,7 @@ function App() {
   };
 
   const deletePosts = async (id) => {
-    await fetch(URL + id, {
+    await fetch(`${URL}posts/${id}`, {
       method: "delete",
     });
     getPosts();
