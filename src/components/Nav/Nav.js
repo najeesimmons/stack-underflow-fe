@@ -5,7 +5,10 @@ const Nav = () => {
   return (
     <div className={styles.div}>
       <nav className={styles.nav}>
-        <Link to="/">Stack Underflow</Link>
+        <Link to="/">
+          <p>stack</p>
+           <p>underflow</p>
+        </Link>
         <Link to="/new">New Post</Link>
       </nav>
     </div>

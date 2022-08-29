@@ -18,3 +18,12 @@
     }
   }
 }
+
+p {
+  display: inline;
+  font-weight: 400;
+}
+
+p:nth-child(2) {
+  font-weight: 700;
+}

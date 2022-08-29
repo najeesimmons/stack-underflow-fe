@@ -1,14 +1,23 @@
-h1 {
-  text-align: left;
+.banner {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
 }
 
-h4 {
+.title {
+  color: black;
   margin: 0;
-  text-align: left;
-  font-weight: 25px;
   font-size: 15px;
-
 }
-a {
+
+.button {
+  background-color: #557dce;
+  border: solid 1px black;
+  border-radius: 3px;
+  color: white;
+  padding: 10px;
+}
+
+.link {
   text-decoration: none;
 }
