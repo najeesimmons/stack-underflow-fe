@@ -8,8 +8,8 @@ const Home = (props) => {
   const allPosts = posts.map((post) => {
     return (
       <Post key={post._id}>
-        <Link to={`/post/${post._id}`}>
-          <p className={styles.title}>{post.title}</p>
+        <Link to={`/post/${post._id}`} className={styles.link}>
+          <div className={styles.title}>{post.title}</div>
         </Link>
       </Post>
     );
