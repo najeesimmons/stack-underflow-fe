@@ -6,6 +6,7 @@ const NewPostForm = (props) => {
     title: "",
     body: "",
     image: "",
+    comments: [],
   });
 
   const handleChange = (event) => {
@@ -19,7 +20,7 @@ const NewPostForm = (props) => {
       title: "",
       body: "",
       image: "",
-      comments: []
+      comments: [],
     });
   };
 

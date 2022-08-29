@@ -27,9 +27,9 @@ const PostShow = (props) => {
   };
   return (
     <Wrapper>
-      <h1>Post Show</h1>
       <h2>{post.title}</h2>
-      <h3>{post.body}</h3>
+      <p>{post.publishDate}</p>
+      <p>{post.body}</p>
       <button id="delete" onClick={removePost}>
         DELETE
       </button>
