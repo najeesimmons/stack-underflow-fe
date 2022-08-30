@@ -19,11 +19,12 @@
   }
 }
 
-p {
+.stack {
   display: inline;
   font-weight: 400;
 }
 
-p:nth-child(2) {
+.underflow {
   font-weight: 700;
+  display: inline;
 }

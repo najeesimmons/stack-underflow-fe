@@ -6,8 +6,8 @@ const Nav = () => {
     <div className={styles.div}>
       <nav className={styles.nav}>
         <Link to="/">
-          <p>stack</p>
-           <p>underflow</p>
+          <p className={styles.stack}>stack</p>
+           <p className={styles.underflow}>underflow</p>
         </Link>
         <Link to="/new">New Post</Link>
       </nav>
