@@ -3,9 +3,7 @@ import { useState } from "react";
 import "./PostShow.module.scss";
 import Wrapper from "../../components/Wrapper/Wrapper";
 
-const PostShow = (props) => {
-  const { posts, updatePosts, deletePosts } = props;
-
+const PostShow = ({ posts, updatePosts, deletePosts }) => {
   const { id } = useParams();
   const post = posts.find((p) => p._id === id);
 
@@ -18,17 +16,17 @@ const PostShow = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     updatePosts(editForm, post._id);
-    props.history.push("/");
+    // props.history.push("/");
   };
 
   const removePost = () => {
     deletePosts(post._id);
-    props.history.push("/");
+    // props.history.push("/");
   };
   return (
     <Wrapper>
       <h2>{post.title}</h2>
-      <p>{post.publishDate}</p>
+      <p>{Date(post.publishDate)}</p>
       <p>{post.body}</p>
       <button id="delete" onClick={removePost}>
         DELETE

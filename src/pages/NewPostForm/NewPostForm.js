@@ -1,18 +1,22 @@
 import { useState } from "react";
 import Wrapper from "../../components/Wrapper/Wrapper";
 import styles from "./NewPostForm.module.scss";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
-const NewPostForm = (props) => {
-  const { createPosts } = props;
+const NewPostForm = ({ createPosts }) => {
+  const [editor, setEditor] = useState("");
+
   const [newForm, setNewForm] = useState({
     title: "",
-    body: "",
+    body: editor,
     image: "",
     comments: [],
   });
 
   const handleChange = (event) => {
     setNewForm({ ...newForm, [event.target.name]: event.target.value });
+    console.log(newForm);
   };
 
   const handleSubmit = (event) => {
@@ -47,13 +51,12 @@ const NewPostForm = (props) => {
             Include all the information someone would need to answer your
             question
           </p>
-          <textarea
-            className={`${styles.input} ${styles.body}`}
-            type="text"
-            value={newForm.body}
+          <ReactQuill
+            value={editor}
+            onChange={(value) => setEditor(value)}
             name="body"
-            placeholder="Ask your question here..."
-            onChange={handleChange}
+            placeholder="Here's my problem..."
+            style={{ width: "100%" }}
           />
           <label className={styles.label}>Image</label>
           <p className={styles.instruction}>Add a valid URL</p>

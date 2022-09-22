@@ -1,10 +1,9 @@
 import Post from "../../components/Post/Post";
 import Wrapper from "../../components/Wrapper/Wrapper";
-import styles from "./Home.module.scss";
+import styles from "./HomePage.module.scss";
 import { Link } from "react-router-dom";
 
-const Home = (props) => {
-  const { posts } = props;
+const HomePage = ({ posts }) => {
   const allPosts = posts.map((post) => {
     return (
       <Post key={post._id}>
@@ -28,4 +27,4 @@ const Home = (props) => {
   );
 };
 
-export default Home;
+export default HomePage;

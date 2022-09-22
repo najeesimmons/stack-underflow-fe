@@ -1,7 +1,7 @@
 import "./App.scss";
 import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Home from "./pages/Home/Home";
+import HomePage from "./pages/HomePage/HomePage";
 import PostShow from "./pages/PostShow/PostShow";
 import Nav from "./components/Nav/Nav";
 import NewPostForm from "./pages/NewPostForm/NewPostForm";
@@ -60,7 +60,7 @@ function App() {
     <div className="App">
       <Nav />
       <Routes>
-        <Route exact path="/" element={<Home posts={posts} />} />
+        <Route exact path="/" element={<HomePage posts={posts} />} />
         <Route
           path="/post/:id"
           element={
