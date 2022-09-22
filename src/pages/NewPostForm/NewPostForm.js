@@ -52,7 +52,7 @@ const NewPostForm = ({ createPosts }) => {
             question
           </p>
           <ReactQuill
-            value={editor}
+            value={editor} // this may be the issue
             onChange={(value) => setEditor(value)}
             name="body"
             placeholder="Here's my problem..."
