@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./PostShow.module.scss";
 import Wrapper from "../../components/Wrapper/Wrapper";
 
-const PostShow = ({ posts, updatePosts, deletePosts }) => {
+const PostShow = ({ posts }) => {
   const { id } = useParams();
   const post = posts.find((p) => p._id === id);
 
@@ -13,25 +13,36 @@ const PostShow = ({ posts, updatePosts, deletePosts }) => {
     setEditForm({ ...editForm, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    updatePosts(editForm, post._id);
-    // props.history.push("/");
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const updatePosts = async (post, id) => {
+  //     await fetch(`${URL}posts/${id}`, {
+  //       method: "put",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(post),
+  //     });
+  //   };
+  // };
 
-  const removePost = () => {
-    deletePosts(post._id);
-    // props.history.push("/");
-  };
+  // const removePost = async (post._id) => {
+  //   await fetch(`${URL}posts/${id}`, {
+  //     method: "delete",
+  //   });
+  // };
+
   return (
     <Wrapper>
       <h2>{post.title}</h2>
       <p>{Date(post.publishDate)}</p>
-      <div dangerouslySetInnerHTML={{__html : post.body}} />
-      <button id="delete" onClick={removePost}>
+      <div dangerouslySetInnerHTML={{ __html: post.body }} />
+      <button id="delete">
+      {/* onClick={removePost} */}
         DELETE
       </button>
-      <form onSubmit={handleSubmit}>
+      <form>
+      {/* onSubmit={handleSubmit} */}
         <input
           type="text"
           value={editForm.title}

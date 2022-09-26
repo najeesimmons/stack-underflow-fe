@@ -1,10 +1,16 @@
+//from react
 import { useState } from "react";
+//components
 import Wrapper from "../../components/Wrapper/Wrapper";
+//styles
 import styles from "./NewPostForm.module.scss";
+//packages
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { usePostsContext } from "../../hooks/usePostsContext";
 
-const NewPostForm = ({ history, createPosts }) => {
+const NewPostForm = () => {
+  const { dispatch } = usePostsContext();
   const [newForm, setNewForm] = useState({
     title: "",
     body: "",
@@ -23,15 +29,30 @@ const NewPostForm = ({ history, createPosts }) => {
     setNewForm((prevForm) => ({ ...prevForm, body: content }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    createPosts(newForm);
-    setNewForm({
-      title: "",
-      body: "",
-      image: "",
-      comments: [],
+    const response = await fetch(`${URL}posts/`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newForm),
     });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.log("error");
+    }
+    if (response.ok) {
+      setNewForm({
+        title: "",
+        body: "",
+        image: "",
+        comments: [],
+      });
+      dispatch({ type: "CREATE_POSTS", payload: data });
+    }
   };
 
   return (

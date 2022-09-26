@@ -1,79 +1,22 @@
-import "./App.scss";
+//from react
 import { Routes, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
-import HomePage from "./pages/HomePage/HomePage";
+
+// components
+import Home from "./pages/Home/Home";
 import PostShow from "./pages/PostShow/PostShow";
 import Nav from "./components/Nav/Nav";
 import NewPostForm from "./pages/NewPostForm/NewPostForm";
+//styles
+import "./App.scss";
 
 function App() {
-  const URL = "http://localhost:4000/";
-  const [posts, setPosts] = useState([]);
-
-  const getPosts = async () => {
-    try {
-      const response = await fetch(`${URL}posts/`);
-      const data = await response.json();
-      setPosts(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const createPosts = async (post) => {
-    try {
-      await fetch(`${URL}posts/`, {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(post),
-        getPosts,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => getPosts, []);
-
-  const updatePosts = async (post, id) => {
-    await fetch(`${URL}posts/${id}`, {
-      method: "put",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(post),
-    });
-    getPosts();
-  };
-
-  const deletePosts = async (id) => {
-    await fetch(`${URL}posts/${id}`, {
-      method: "delete",
-    });
-    getPosts();
-  };
-
   return (
     <div className="App">
       <Nav />
       <Routes>
-        <Route exact path="/" element={<HomePage posts={posts} />} />
-        <Route
-          path="/post/:id"
-          element={
-            <PostShow
-              posts={posts}
-              updatePosts={updatePosts}
-              deletePosts={deletePosts}
-            />
-          }
-        />
-        <Route
-          path="/new"
-          element={<NewPostForm createPosts={createPosts} />}
-        />
+        <Route exact path="/" element={<Home />} />
+        <Route path="/post/:id" element={<PostShow />} />
+        <Route path="/new" element={<NewPostForm />} />
       </Routes>
     </div>
   );
