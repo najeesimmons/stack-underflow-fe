@@ -4,19 +4,23 @@ import styles from "./NewPostForm.module.scss";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-const NewPostForm = ({ createPosts }) => {
-  const [editor, setEditor] = useState("");
-
+const NewPostForm = ({ history, createPosts }) => {
   const [newForm, setNewForm] = useState({
     title: "",
-    body: editor,
+    body: "",
     image: "",
     comments: [],
   });
 
   const handleChange = (event) => {
-    setNewForm({ ...newForm, [event.target.name]: event.target.value });
-    console.log(newForm);
+    setNewForm((prevForm) => ({
+      ...prevForm,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const handleEditorChange = (content) => {
+    setNewForm((prevForm) => ({ ...prevForm, body: content }));
   };
 
   const handleSubmit = (event) => {
@@ -52,8 +56,8 @@ const NewPostForm = ({ createPosts }) => {
             question
           </p>
           <ReactQuill
-            value={editor} // this may be the issue
-            onChange={(value) => setEditor(value)}
+            value={newForm.body}
+            onChange={handleEditorChange}
             name="body"
             placeholder="Here's my problem..."
             style={{ width: "100%" }}

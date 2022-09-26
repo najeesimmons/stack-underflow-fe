@@ -14,7 +14,6 @@ function App() {
     try {
       const response = await fetch(`${URL}posts/`);
       const data = await response.json();
-      console.log(data);
       setPosts(data);
     } catch (error) {
       console.log(error);

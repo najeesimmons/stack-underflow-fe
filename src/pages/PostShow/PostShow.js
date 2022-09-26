@@ -27,7 +27,7 @@ const PostShow = ({ posts, updatePosts, deletePosts }) => {
     <Wrapper>
       <h2>{post.title}</h2>
       <p>{Date(post.publishDate)}</p>
-      <p>{post.body}</p>
+      <div dangerouslySetInnerHTML={{__html : post.body}} />
       <button id="delete" onClick={removePost}>
         DELETE
       </button>

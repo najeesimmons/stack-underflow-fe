@@ -9,6 +9,7 @@ const HomePage = ({ posts }) => {
       <Post key={post._id}>
         <Link to={`/post/${post._id}`} className={styles.link}>
           <div className={styles.title}>{post.title}</div>
+          <div dangerouslySetInnerHTML={{__html : post.body}} />
         </Link>
       </Post>
     );
