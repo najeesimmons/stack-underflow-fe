@@ -3,13 +3,13 @@ import { useState } from "react";
 //components
 import Wrapper from "../../components/Wrapper/Wrapper";
 //styles
-import styles from "./NewPostForm.module.scss";
+import styles from "./PostForm.module.scss";
 //packages
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { usePostsContext } from "../../hooks/usePostsContext";
 
-const NewPostForm = () => {
+const NewPostForm = ({ URL }) => {
   const { dispatch } = usePostsContext();
   const [newForm, setNewForm] = useState({
     title: "",
@@ -31,6 +31,7 @@ const NewPostForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log('clicked')
     const response = await fetch(`${URL}posts/`, {
       method: "post",
       headers: {

@@ -1,12 +1,15 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
+import { usePostsContext } from "../../hooks/usePostsContext";
 import "./PostShow.module.scss";
 import Wrapper from "../../components/Wrapper/Wrapper";
 
-const PostShow = ({ posts }) => {
+const PostShow = () => {
+  const { posts, dispatch } = usePostsContext();
   const { id } = useParams();
+  console.log(id)
   const post = posts.find((p) => p._id === id);
-
+  console.log(post)
   const [editForm, setEditForm] = useState(post);
 
   const handleChange = (event) => {

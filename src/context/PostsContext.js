@@ -2,6 +2,7 @@ import { createContext, useReducer } from "react";
 
 export const PostsContext = createContext();
 
+//reducer handles different ways I'd want to mutate state
 export const postsReducer = (state, action) => {
   switch (action.type) {
     case "SET_POSTS":

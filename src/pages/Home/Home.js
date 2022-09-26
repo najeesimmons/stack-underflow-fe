@@ -10,9 +10,8 @@ import { useEffect } from "react";
 //styles
 import styles from "./Home.module.scss";
 
-const Home = () => {
+const Home = ({ URL }) => {
   const { posts, dispatch } = usePostsContext();
-  const URL = "http://localhost:4000/";
 
   useEffect(() => {
     const getPosts = async () => {
@@ -35,14 +34,15 @@ const Home = () => {
           <div className={styles.button}>Ask a Question</div>
         </Link>
       </div>
-      {posts && posts.map(post => (
-        <Post key={post._id}>
-        <Link to={`/post/${post._id}`} className={styles.link}>
-          <div className={styles.title}>{post.title}</div>
-          <div dangerouslySetInnerHTML={{ __html: post.body }} />
-        </Link>
-      </Post>
-      ))}
+      {posts &&
+        posts.map((post) => (
+          <Post key={post._id}>
+            <Link to={`/post/${post._id}`} className={styles.link}>
+              <div className={styles.title}>{post.title}</div>
+              <div dangerouslySetInnerHTML={{ __html: post.body }} />
+            </Link>
+          </Post>
+        ))}
     </Wrapper>
   );
 };
