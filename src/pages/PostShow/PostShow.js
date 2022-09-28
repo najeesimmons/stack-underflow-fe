@@ -1,16 +1,22 @@
-import { useParams } from "react-router-dom";
+//from react
 import { useState } from "react";
-import { usePostsContext } from "../../hooks/usePostsContext";
-import "./PostShow.module.scss";
+//react-router-dom
+import { useParams, useNavigate } from "react-router-dom";
+//components
 import Wrapper from "../../components/Wrapper/Wrapper";
+//custom hooks
+import { usePostsContext } from "../../hooks/usePostsContext";
+//date fns
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
+//styles
+import "./PostShow.module.scss";
 
-const PostShow = () => {
+const PostShow = ({ URL }) => {
   const { posts, dispatch } = usePostsContext();
   const { id } = useParams();
-  console.log(id)
   const post = posts.find((p) => p._id === id);
-  console.log(post)
   const [editForm, setEditForm] = useState(post);
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     setEditForm({ ...editForm, [event.target.name]: event.target.value });
@@ -29,23 +35,28 @@ const PostShow = () => {
   //   };
   // };
 
-  // const removePost = async (post._id) => {
-  //   await fetch(`${URL}posts/${id}`, {
-  //     method: "delete",
-  //   });
-  // };
+  const handleDelete = async () => {
+    const response = await fetch(`${URL}posts/${id}`, {
+      method: "DELETE",
+    });
+    const data = await response.json();
+
+    if (response.ok) {
+      dispatch({ type: "DELETE_WORKOUT", payload: data });
+    }
+    navigate('/')
+  };
 
   return (
     <Wrapper>
       <h2>{post.title}</h2>
-      <p>{Date(post.publishDate)}</p>
+      <p>{formatDistanceToNow(new Date(post.publishDate), { addSuffix: true })}</p>
       <div dangerouslySetInnerHTML={{ __html: post.body }} />
-      <button id="delete">
-      {/* onClick={removePost} */}
+      <button id="delete" onClick={handleDelete}>
         DELETE
       </button>
       <form>
-      {/* onSubmit={handleSubmit} */}
+        {/* onSubmit={handleSubmit} */}
         <input
           type="text"
           value={editForm.title}
@@ -67,7 +78,6 @@ const PostShow = () => {
           placeholder="image URL"
           onChange={handleChange}
         />
-        <input type="submit" value="Update Person" />
       </form>
     </Wrapper>
   );

@@ -1,22 +1,29 @@
-//from react
+//react
 import { useState } from "react";
+//react-router-dom
+import { useNavigate } from "react-router-dom";
 //components
 import Wrapper from "../../components/Wrapper/Wrapper";
-//styles
-import styles from "./PostForm.module.scss";
+//custom hook
+import { usePostsContext } from "../../hooks/usePostsContext";
 //packages
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { usePostsContext } from "../../hooks/usePostsContext";
+//styles
+import styles from "./PostForm.module.scss";
+
 
 const NewPostForm = ({ URL }) => {
   const { dispatch } = usePostsContext();
+  const navigate = useNavigate();
   const [newForm, setNewForm] = useState({
     title: "",
     body: "",
     image: "",
     comments: [],
   });
+  const [error, setError] = useState(null);
+  const [emptyFields, setEmptyFields] = useState([]);
 
   const handleChange = (event) => {
     setNewForm((prevForm) => ({
@@ -31,9 +38,8 @@ const NewPostForm = ({ URL }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('clicked')
     const response = await fetch(`${URL}posts/`, {
-      method: "post",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -43,9 +49,12 @@ const NewPostForm = ({ URL }) => {
     const data = await response.json();
 
     if (!response.ok) {
-      console.log("error");
+      setError(data.error);
+      setEmptyFields(data.emptyFields);
     }
     if (response.ok) {
+      setError(null);
+      setEmptyFields([]);
       setNewForm({
         title: "",
         body: "",
@@ -54,6 +63,7 @@ const NewPostForm = ({ URL }) => {
       });
       dispatch({ type: "CREATE_POSTS", payload: data });
     }
+    navigate('/')
   };
 
   return (
@@ -65,7 +75,8 @@ const NewPostForm = ({ URL }) => {
             Be specific and imagine you’re asking a question to another person
           </p>
           <input
-            className={styles.input}
+            className={emptyFields.includes("title") ? "styles.error" : "styles.input"}
+            // className={styles.input}
             type="text"
             value={newForm.title}
             name="title"
@@ -78,6 +89,7 @@ const NewPostForm = ({ URL }) => {
             question
           </p>
           <ReactQuill
+            className={emptyFields.includes("body") ? "styles.error" : ""}
             value={newForm.body}
             onChange={handleEditorChange}
             name="body"
@@ -87,7 +99,7 @@ const NewPostForm = ({ URL }) => {
           <label className={styles.label}>Image</label>
           <p className={styles.instruction}>Add a valid URL</p>
           <input
-            className={styles.input}
+            className={emptyFields.includes("image") ? "error" : styles.input}
             type="text"
             value={newForm.image}
             name="image"
@@ -97,6 +109,7 @@ const NewPostForm = ({ URL }) => {
           <button className={styles.button} value="Create Post" type="submit">
             Post Your Question
           </button>
+          {error && <div className="error">{error}</div>}
         </form>
       </Wrapper>
     </section>
