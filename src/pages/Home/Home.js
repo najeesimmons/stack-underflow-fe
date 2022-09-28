@@ -24,7 +24,7 @@ const Home = ({ URL }) => {
     };
 
     getPosts();
-  }, [dispatch]);
+  }, [dispatch, URL]);
 
   return (
     <Wrapper>
