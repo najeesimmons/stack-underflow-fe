@@ -63,7 +63,6 @@ const NewPostForm = ({ URL }) => {
       dispatch({ type: "CREATE_POSTS", payload: data });
       navigate("/")
     }
-    // navigate("/");
   };
 
   return (
