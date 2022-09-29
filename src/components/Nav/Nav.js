@@ -7,9 +7,10 @@ const Nav = () => {
       <nav className={styles.nav}>
         <Link to="/">
           <p className={styles.stack}>stack</p>
-           <p className={styles.underflow}>underflow</p>
+          <p className={styles.underflow}>underflow</p>
         </Link>
-        <Link to="/new">New Post</Link>
+        <Link to="/login">Log in</Link>
+        <Link to="/signup">Sign up</Link>
       </nav>
     </div>
   );

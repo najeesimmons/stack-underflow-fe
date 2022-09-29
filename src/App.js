@@ -1,11 +1,12 @@
 //from react
 import { Routes, Route } from "react-router-dom";
-
 // components
 import Home from "./pages/Home/Home";
-import PostShow from "./pages/PostShow/PostShow";
-import Nav from "./components/Nav/Nav";
+import Login from "./pages/Login/Login";
 import PostForm from "./pages/PostForm/PostForm";
+import PostShow from "./pages/PostShow/PostShow";
+import Signup from "./pages/Signup/Signup";
+import Nav from "./components/Nav/Nav";
 //styles
 import "./App.scss";
 
@@ -19,6 +20,8 @@ function App() {
         <Route exact path="/" element={<Home URL={URL} />} />
         <Route path="/post/:id" element={<PostShow URL={URL} />} />
         <Route path="/new" element={<PostForm URL={URL} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </div>
   );
