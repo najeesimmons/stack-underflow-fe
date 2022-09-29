@@ -1,5 +1,5 @@
-//from react
-import { Routes, Route } from "react-router-dom";
+// import { BrowserRouter, Routes, Route } from "react-router-dom";
+import{ BrowserRouter, Routes, Route } from "react-router-dom"
 // components
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
@@ -15,14 +15,16 @@ function App() {
 
   return (
     <div className="App">
-      <Nav />
-      <Routes>
-        <Route exact path="/" element={<Home URL={URL} />} />
-        <Route path="/post/:id" element={<PostShow URL={URL} />} />
-        <Route path="/new" element={<PostForm URL={URL} />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
+      <BrowserRouter>
+        <Nav />
+        <Routes>
+          <Route exact path="/" element={<Home URL={URL} />} />
+          <Route path="/post/:id" element={<PostShow URL={URL} />} />
+          <Route path="/new" element={<PostForm URL={URL} />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
