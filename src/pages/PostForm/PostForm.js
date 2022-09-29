@@ -12,7 +12,6 @@ import "react-quill/dist/quill.snow.css";
 //styles
 import styles from "./PostForm.module.scss";
 
-
 const NewPostForm = ({ URL }) => {
   const { dispatch } = usePostsContext();
   const navigate = useNavigate();
@@ -63,7 +62,7 @@ const NewPostForm = ({ URL }) => {
       });
       dispatch({ type: "CREATE_POSTS", payload: data });
     }
-    navigate('/')
+    navigate("/");
   };
 
   return (
@@ -75,8 +74,9 @@ const NewPostForm = ({ URL }) => {
             Be specific and imagine you’re asking a question to another person
           </p>
           <input
-            className={emptyFields.includes("title") ? "styles.error" : "styles.input"}
-            // className={styles.input}
+            className={
+              emptyFields.includes("title") ? styles.error : styles.input
+            }
             type="text"
             value={newForm.title}
             name="title"
@@ -89,7 +89,7 @@ const NewPostForm = ({ URL }) => {
             question
           </p>
           <ReactQuill
-            className={emptyFields.includes("body") ? "styles.error" : ""}
+            className={emptyFields.includes("body") ? styles.error : ""}
             value={newForm.body}
             onChange={handleEditorChange}
             name="body"
@@ -99,7 +99,9 @@ const NewPostForm = ({ URL }) => {
           <label className={styles.label}>Image</label>
           <p className={styles.instruction}>Add a valid URL</p>
           <input
-            className={emptyFields.includes("image") ? "error" : styles.input}
+            className={
+              emptyFields.includes("image") ? styles.error : styles.input
+            }
             type="text"
             value={newForm.image}
             name="image"

@@ -44,13 +44,15 @@ const PostShow = ({ URL }) => {
     if (response.ok) {
       dispatch({ type: "DELETE_WORKOUT", payload: data });
     }
-    navigate('/')
+    navigate("/");
   };
 
   return (
     <Wrapper>
       <h2>{post.title}</h2>
-      <p>{formatDistanceToNow(new Date(post.publishDate), { addSuffix: true })}</p>
+      <p>
+        {formatDistanceToNow(new Date(post.publishDate), { addSuffix: true })}
+      </p>
       <div dangerouslySetInnerHTML={{ __html: post.body }} />
       <button id="delete" onClick={handleDelete}>
         DELETE
