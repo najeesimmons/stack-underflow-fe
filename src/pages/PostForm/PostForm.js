@@ -61,8 +61,9 @@ const NewPostForm = ({ URL }) => {
         comments: [],
       });
       dispatch({ type: "CREATE_POSTS", payload: data });
+      navigate("/")
     }
-    navigate("/");
+    // navigate("/");
   };
 
   return (
