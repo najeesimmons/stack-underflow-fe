@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import styles from "./Nav.module.scss";
 import { useLogout } from "../../hooks/useLogout";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const Nav = () => {
   const { logout } = useLogout();
+  const { user } = useAuthContext();
   const handleClick = () => {
     logout();
   };
@@ -14,15 +16,19 @@ const Nav = () => {
           <p className={styles.stack}>stack</p>
           <p className={styles.underflow}>underflow</p>
         </Link>
-        <div>
-          <button onClick={handleClick}>Log out</button>
-        </div>
-        <div className={styles.auth}>
-          <Link to="/login">Log in</Link>
-          <Link to="/signup" className={styles.signup}>
-            Sign up
-          </Link>
-        </div>
+        {user && (
+          <div>
+            <button onClick={handleClick}>Log out</button>
+          </div>
+        )}
+        {!user && (
+          <div className={styles.auth}>
+            <Link to="/login">Log in</Link>
+            <Link to="/signup" className={styles.signup}>
+              Sign up
+            </Link>
+          </div>
+        )}
       </nav>
     </div>
   );
