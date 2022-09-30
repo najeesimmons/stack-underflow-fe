@@ -3,15 +3,15 @@ import ReactDOM from "react-dom/client";
 import "./index.scss";
 import App from "./App";
 import { PostsContextProvider } from "./context/PostsContext";
-// import { AuthContextProvider } from "./context/AuthContext";
+import { AuthContextProvider } from "./context/AuthContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* <AuthContextProvider> */}
+    <AuthContextProvider>
       <PostsContextProvider>
         <App />
       </PostsContextProvider>
-    {/* </AuthContextProvider> */}
+    </AuthContextProvider>
   </React.StrictMode>
 );
