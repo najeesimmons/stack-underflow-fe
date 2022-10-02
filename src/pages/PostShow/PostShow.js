@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 //components
 import Wrapper from "../../components/Wrapper/Wrapper";
 //custom hooks
+import { useAuthContext } from "../../hooks/useAuthContext";
 import { usePostsContext } from "../../hooks/usePostsContext";
 //date fns
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
@@ -13,6 +14,8 @@ import "./PostShow.module.scss";
 
 const PostShow = ({ URL }) => {
   const { posts, dispatch } = usePostsContext();
+  const { user } = useAuthContext();
+
   const { id } = useParams();
   const post = posts.find((p) => p._id === id);
   const [editForm, setEditForm] = useState(post);
@@ -22,22 +25,18 @@ const PostShow = ({ URL }) => {
     setEditForm({ ...editForm, [event.target.name]: event.target.value });
   };
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const updatePosts = async (post, id) => {
-  //     await fetch(`${URL}posts/${id}`, {
-  //       method: "put",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(post),
-  //     });
-  //   };
-  // };
-
   const handleDelete = async () => {
+    if (!user) {
+      console.log(
+        "Permission to delete a post will be assinged to the owner of that post."
+      );
+      return;
+    }
     const response = await fetch(`${URL}posts/${id}`, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
     });
     const data = await response.json();
 
