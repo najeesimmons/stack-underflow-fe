@@ -1,7 +1,7 @@
-import styles from "./Post.module.scss"
+import styles from "./Post.module.scss";
 
-const Post = (props) => {
-  return <div className={styles.div}>{props.children}</div>;
+const Post = ({ children }) => {
+  return <div className={styles.div}>{children}</div>;
 };
 
 export default Post;

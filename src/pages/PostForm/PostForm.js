@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Wrapper from "../../components/Wrapper/Wrapper";
 //custom hook
 import { usePostsContext } from "../../hooks/usePostsContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
 //packages
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -14,6 +15,8 @@ import styles from "./PostForm.module.scss";
 
 const NewPostForm = ({ URL }) => {
   const { dispatch } = usePostsContext();
+  const { user } = useAuthContext();
+
   const navigate = useNavigate();
   const [newForm, setNewForm] = useState({
     title: "",
@@ -37,10 +40,17 @@ const NewPostForm = ({ URL }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!user) {
+      setError("You must be logged in");
+      return;
+    }
+
     const response = await fetch(`${URL}posts/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
       },
       body: JSON.stringify(newForm),
     });
@@ -61,7 +71,7 @@ const NewPostForm = ({ URL }) => {
         comments: [],
       });
       dispatch({ type: "CREATE_POSTS", payload: data });
-      navigate("/")
+      navigate("/");
     }
   };
 
