@@ -38,12 +38,32 @@ const NewPostForm = ({ URL }) => {
     setNewForm((prevForm) => ({ ...prevForm, body: content }));
   };
 
+  const handleValidation = () => {
+    const errors = [];
+    if (!newForm.title) {
+      errors.push('title')
+    }
+    if (!newForm.body) {
+      errors.push('body')
+    }
+    if (!newForm.image) {
+      errors.push('image')
+    }
+    setEmptyFields(errors)
+    return errors
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!user) {
       setError("You must be logged in");
       return;
+    }
+
+    const hasErrors = handleValidation();
+    if (hasErrors.length > 0) {
+      return
     }
 
     const response = await fetch(`${URL}posts/`, {

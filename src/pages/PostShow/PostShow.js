@@ -50,7 +50,7 @@ const PostShow = ({ URL }) => {
     <Wrapper>
       <h2>{post.title}</h2>
       <p>
-        {formatDistanceToNow(new Date(post.publishDate), { addSuffix: true })}
+        {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
       </p>
       <div dangerouslySetInnerHTML={{ __html: post.body }} />
       <button id="delete" onClick={handleDelete}>

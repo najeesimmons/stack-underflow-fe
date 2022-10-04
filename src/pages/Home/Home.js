@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 //styles
 import styles from "./Home.module.scss";
+//fns
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 const Home = ({ URL }) => {
   const { posts, dispatch } = usePostsContext();
@@ -37,6 +39,9 @@ const Home = ({ URL }) => {
       {posts &&
         posts.map((post) => (
           <Post key={post._id}>
+            <p>
+        {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
+      </p>
             <Link to={`/post/${post._id}`} className={styles.link}>
               <div className={styles.title}>{post.title}</div>
             </Link>
