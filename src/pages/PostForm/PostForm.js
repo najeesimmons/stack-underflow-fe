@@ -21,7 +21,6 @@ const NewPostForm = ({ URL }) => {
   const [newForm, setNewForm] = useState({
     title: "",
     body: "",
-    image: "",
     comments: [],
   });
   const [error, setError] = useState(null);
