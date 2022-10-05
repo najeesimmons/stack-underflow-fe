@@ -46,9 +46,6 @@ const NewPostForm = ({ URL }) => {
     if (!newForm.body) {
       errors.push('body')
     }
-    if (!newForm.image) {
-      errors.push('image')
-    }
     setEmptyFields(errors)
     return errors
   }
@@ -125,18 +122,6 @@ const NewPostForm = ({ URL }) => {
             name="body"
             placeholder="Here's my problem..."
             style={{ width: "100%" }}
-          />
-          <label className={styles.label}>Image</label>
-          <p className={styles.instruction}>Add a valid URL</p>
-          <input
-            className={
-              emptyFields.includes("image") ? styles.error : styles.input
-            }
-            type="text"
-            value={newForm.image}
-            name="image"
-            placeholder="http://..."
-            onChange={handleChange}
           />
           <button className={styles.button} value="Create Post" type="submit">
             Post Your Question
