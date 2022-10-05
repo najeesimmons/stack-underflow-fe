@@ -55,9 +55,9 @@ const PostShow = ({ URL }) => {
       </p>
       <div dangerouslySetInnerHTML={{ __html: post.body }} />
       <p>{post.user_id}</p>
-      <button id="delete" onClick={handleDelete}>
+      { user._id === post.user_id && <button id="delete" onClick={handleDelete}>
         DELETE
-      </button>
+      </button>}
       <form>
         {/* onSubmit={handleSubmit} */}
         <input
