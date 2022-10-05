@@ -74,13 +74,6 @@ const PostShow = ({ URL }) => {
           placeholder="body"
           onChange={handleChange}
         />
-        <input
-          type="text"
-          value={editForm.image}
-          name="image"
-          placeholder="image URL"
-          onChange={handleChange}
-        />
       </form>
     </Wrapper>
   );
