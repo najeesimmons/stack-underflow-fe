@@ -40,11 +40,14 @@ const Home = ({ URL }) => {
         posts.map((post) => (
           <Post key={post._id}>
             <p>
-        {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
-      </p>
+              {formatDistanceToNow(new Date(post.createdAt), {
+                addSuffix: true,
+              })}
+            </p>
             <Link to={`/post/${post._id}`} className={styles.link}>
               <div className={styles.title}>{post.title}</div>
             </Link>
+            <p>{post.user_id}</p>
           </Post>
         ))}
     </Wrapper>

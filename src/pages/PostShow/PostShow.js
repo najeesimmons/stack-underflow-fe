@@ -27,11 +27,12 @@ const PostShow = ({ URL }) => {
 
   const handleDelete = async () => {
     if (!user) {
-      console.log(
-        "Permission to delete a post will be assinged to the owner of that post."
-      );
       return;
     }
+    if (user._id !== post.user_id) {
+      return;
+    }
+
     const response = await fetch(`${URL}posts/${id}`, {
       method: "DELETE",
       headers: {
@@ -53,6 +54,7 @@ const PostShow = ({ URL }) => {
         {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
       </p>
       <div dangerouslySetInnerHTML={{ __html: post.body }} />
+      <p>{post.user_id}</p>
       <button id="delete" onClick={handleDelete}>
         DELETE
       </button>
