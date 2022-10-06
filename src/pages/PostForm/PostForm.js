@@ -83,7 +83,6 @@ const NewPostForm = ({ URL }) => {
       setNewForm({
         title: "",
         body: "",
-        image: "",
         comments: [],
       });
       dispatch({ type: "CREATE_POSTS", payload: data });
