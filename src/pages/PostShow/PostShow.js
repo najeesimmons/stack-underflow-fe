@@ -18,6 +18,7 @@ const PostShow = ({ URL }) => {
 
   const { id } = useParams();
   const post = posts.find((p) => p._id === id);
+  const isUser = user._id === post.user_id;
   const [editForm, setEditForm] = useState(post);
   const navigate = useNavigate();
 
@@ -26,10 +27,16 @@ const PostShow = ({ URL }) => {
   };
 
   const handleDelete = async () => {
+    console.log(user);
     if (!user) {
+      // throw Error
+      console.log("You must be logged in to delete a post.");
       return;
     }
-    if (user._id !== post.user_id) {
+
+    if (!isUser) {
+      //throw Error
+      console.log("You're not authorized to delete this post.");
       return;
     }
 
@@ -39,6 +46,7 @@ const PostShow = ({ URL }) => {
         Authorization: `Bearer ${user.token}`,
       },
     });
+
     const data = await response.json();
 
     if (response.ok) {
@@ -55,7 +63,7 @@ const PostShow = ({ URL }) => {
       </p>
       <div dangerouslySetInnerHTML={{ __html: post.body }} />
       <p>{post.user_id}</p>
-      { user._id === post.user_id && <button id="delete" onClick={handleDelete}>
+      { isUser && <button id="delete" onClick={handleDelete}>
         DELETE
       </button>}
       <form>
