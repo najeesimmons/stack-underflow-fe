@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import styles from "./Nav.module.scss";
 import { useLogout } from "../../hooks/useLogout";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import "../../index.scss";
 
 const Nav = () => {
   const { logout } = useLogout();
@@ -10,27 +10,33 @@ const Nav = () => {
     logout();
   };
   return (
-    <div className={styles.div}>
-      <nav className={styles.nav}>
-        <Link to="/">
-          <p className={styles.stack}>stack</p>
-          <p className={styles.underflow}>underflow</p>
-        </Link>
+    <section className="nav-container">
+      <nav className="site-nav grid">
+        <div className="logo">
+          <Link to="/">
+            <p className="stack">stack</p>
+            <p className="underflow">underflow</p>
+          </Link>
+        </div>
         {user && (
-          <div>
-            <button onClick={handleClick}>Log out</button>
-          </div>
+          <ul className="login-status">
+            <li className="button" onClick={handleClick}>
+              Log out
+            </li>
+          </ul>
         )}
         {!user && (
-          <div className={styles.auth}>
-            <Link to="/login">Log in</Link>
-            <Link to="/signup" className={styles.signup}>
-              Sign up
+          <div className="login-status">
+            <Link to="/login" className="button">
+              <span>Log in</span>
+            </Link>
+            <Link to="/signup" className="button signup">
+              <span>Sign up</span>
             </Link>
           </div>
         )}
       </nav>
-    </div>
+    </section>
   );
 };
 export default Nav;

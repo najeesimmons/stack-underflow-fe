@@ -8,7 +8,7 @@ import PostShow from "./pages/PostShow/PostShow";
 import Signup from "./pages/Signup/Signup";
 import Nav from "./components/Nav/Nav";
 //styles
-import "./App.scss";
+
 
 function App() {
   const URL = "http://localhost:4000/";

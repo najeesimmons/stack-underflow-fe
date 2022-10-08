@@ -2,15 +2,11 @@
 import { useState } from "react";
 //react-router-dom
 import { useParams, useNavigate } from "react-router-dom";
-//components
-import Wrapper from "../../components/Wrapper/Wrapper";
 //custom hooks
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { usePostsContext } from "../../hooks/usePostsContext";
 //date fns
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
-//styles
-import "./PostShow.module.scss";
 
 const PostShow = ({ URL }) => {
   const { posts, dispatch } = usePostsContext();
@@ -18,7 +14,8 @@ const PostShow = ({ URL }) => {
 
   const { id } = useParams();
   const post = posts.find((p) => p._id === id);
-  const isUser = user._id === post.user_id;
+  // rendering issues when there is no logged in user
+  // const isUser = user._id === post.user_id;
   const [editForm, setEditForm] = useState(post);
   const navigate = useNavigate();
 
@@ -34,7 +31,7 @@ const PostShow = ({ URL }) => {
       return;
     }
 
-    if (!isUser) {
+    if (!user._id === post.user_id) {
       //throw Error
       console.log("You're not authorized to delete this post.");
       return;
@@ -56,16 +53,18 @@ const PostShow = ({ URL }) => {
   };
 
   return (
-    <Wrapper>
+    <section className="post-show-container">
       <h2>{post.title}</h2>
       <p>
         {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
       </p>
       <div dangerouslySetInnerHTML={{ __html: post.body }} />
       <p>{post.user_id}</p>
-      { isUser && <button id="delete" onClick={handleDelete}>
-        DELETE
-      </button>}
+      {user._id === post.user_id && (
+        <button id="delete" onClick={handleDelete}>
+          DELETE
+        </button>
+      )}
       <form>
         {/* onSubmit={handleSubmit} */}
         <input
@@ -83,7 +82,7 @@ const PostShow = ({ URL }) => {
           onChange={handleChange}
         />
       </form>
-    </Wrapper>
+    </section>
   );
 };
 
