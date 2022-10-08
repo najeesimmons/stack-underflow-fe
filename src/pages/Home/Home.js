@@ -14,6 +14,7 @@ const Home = ({ URL }) => {
   const { posts, dispatch } = usePostsContext();
 
   useEffect(() => {
+    document.body.style.background = "white";
     const getPosts = async () => {
       const response = await fetch(`${URL}posts/`);
       const data = await response.json();

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLogin } from "../../hooks/useLogin";
 
 const Login = () => {
@@ -12,6 +12,10 @@ const Login = () => {
 
     await login(email, password);
   };
+
+  useEffect(() => {
+    document.body.style.background = "#e6e6e6";
+  });
 
   return (
     <section className="form-container grid">

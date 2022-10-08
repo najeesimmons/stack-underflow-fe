@@ -17,10 +17,6 @@ li {
 li {
   list-style-type: none;
 }
-
-body {
-  background: #e6e6e6;
-}
 .button {
   background-color: var(--secondary);
   border: solid 1px black;
@@ -47,7 +43,6 @@ h4 {
   grid-template-columns: repeat(8, 1fr);
   gap: 10px;
 }
-
 .error {
   border: 2px solid red;
 }
@@ -57,6 +52,7 @@ h4 {
   box-shadow: 0 2px 2px -2px gray;
   border-bottom: black solid 1px;
   background: white;
+  // position: fixed;
 }
 
 .site-nav {
@@ -76,9 +72,6 @@ h4 {
   display: flex;
   justify-content: flex-end;
 }
-// .login {
-//   margin-left: 5px;
-// }
 .signup {
   margin-left: 5px;
 }
@@ -92,20 +85,20 @@ h4 {
 }
 /*home*/
 .home {
-  padding: 0 20px;
-  background: white;
 }
 .heading {
   grid-column: 1/4;
   font-size: 1.4em;
+  padding-left: 20px;
 }
 .ask-question {
   grid-column: 6/9;
   text-align: center;
-  margin-top: 10px;
+  margin: 10px;
+  padding-right: 10px;
 }
 .each-post {
-  border: rgb(200, 199, 199) 0.5px solid;
+  border-bottom: rgb(200, 199, 199) 0.5px solid;
   padding: 20px;
   grid-column: 1/9;
 }
@@ -150,18 +143,25 @@ h4 {
 
 /* question form*/
 .question-container {
-padding: 20px 20px 0 20px;
-}
+  padding: 20px 20px 0 20px;
 
-.question-quicktips {
-  margin-bottom: 7px;
+  .question-quicktips {
+    margin-bottom: 7px;
+  }
 }
 
 /*post show page*/
 .post-show-container {
-  background: white;
   padding: 20px;
 }
+.post-show-container h2 {
+  margin-bottom: 7px;
+}
+.post-info {
+  border-bottom: 1px solid gray;
+  padding-bottom: 7px;
+}
+
 /* small tablet styles */
 @media screen and (min-width: 620px) {
 }
