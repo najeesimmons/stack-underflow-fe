@@ -2,8 +2,6 @@
 import { useState } from "react";
 //react-router-dom
 import { useNavigate } from "react-router-dom";
-//components
-import Wrapper from "../../components/Wrapper/Wrapper";
 //custom hook
 import { usePostsContext } from "../../hooks/usePostsContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
@@ -11,7 +9,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 //styles
-import styles from "./PostForm.module.scss";
+import "../../index.scss"
 
 const NewPostForm = ({ URL }) => {
   const { dispatch } = usePostsContext();
@@ -40,14 +38,14 @@ const NewPostForm = ({ URL }) => {
   const handleValidation = () => {
     const errors = [];
     if (!newForm.title) {
-      errors.push('title')
+      errors.push("title");
     }
     if (!newForm.body) {
-      errors.push('body')
+      errors.push("body");
     }
-    setEmptyFields(errors)
-    return errors
-  }
+    setEmptyFields(errors);
+    return errors;
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -59,7 +57,7 @@ const NewPostForm = ({ URL }) => {
 
     const hasErrors = handleValidation();
     if (hasErrors.length > 0) {
-      return
+      return;
     }
 
     const response = await fetch(`${URL}posts/`, {
@@ -91,42 +89,38 @@ const NewPostForm = ({ URL }) => {
   };
 
   return (
-    <section>
-      <Wrapper>
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <label className={styles.label}>Title</label>
-          <p className={styles.instruction}>
-            Be specific and imagine you’re asking a question to another person
-          </p>
-          <input
-            className={
-              emptyFields.includes("title") ? styles.error : styles.input
-            }
-            type="text"
-            value={newForm.title}
-            name="title"
-            placeholder="Title"
-            onChange={handleChange}
-          />
-          <label className={styles.label}>Body</label>
-          <p className={styles.instruction}>
-            Include all the information someone would need to answer your
-            question
-          </p>
-          <ReactQuill
-            className={emptyFields.includes("body") ? styles.error : ""}
-            value={newForm.body}
-            onChange={handleEditorChange}
-            name="body"
-            placeholder="Here's my problem..."
-            style={{ width: "100%" }}
-          />
-          <button className={styles.button} value="Create Post" type="submit">
-            Post Your Question
-          </button>
-          {error && <div className="error">{error}</div>}
-        </form>
-      </Wrapper>
+    <section className="question-container">
+      <h3>Ask a public question</h3>
+      <form onSubmit={handleSubmit} className="form-style">
+        <label>Title</label>
+        <p className="question-quicktips">
+          Be specific and imagine you’re asking a question to another person
+        </p>
+        <input
+          className={emptyFields.includes("title") ? "error" : "input"}
+          type="text"
+          value={newForm.title}
+          name="title"
+          placeholder="Title"
+          onChange={handleChange}
+        />
+        <label>Body</label>
+        <p>
+          Include all the information someone would need to answer your question
+        </p>
+        <ReactQuill
+          className={emptyFields.includes("body") ? "error" : ""}
+          value={newForm.body}
+          onChange={handleEditorChange}
+          name="body"
+          placeholder="Here's my problem..."
+          style={{ width: "100%" }}
+        />
+        <button value="Create Post" type="submit" className="button">
+          Post Your Question
+        </button>
+        {error && <div className="error">{error}</div>}
+      </form>
     </section>
   );
 };

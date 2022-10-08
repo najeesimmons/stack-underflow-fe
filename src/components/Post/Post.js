@@ -1,7 +1,5 @@
-import styles from "./Post.module.scss";
-
 const Post = ({ children }) => {
-  return <div className={styles.div}>{children}</div>;
+  return <div className="each-post">{children}</div>;
 };
 
 export default Post;
