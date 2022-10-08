@@ -55,14 +55,15 @@ const PostShow = ({ URL }) => {
   return (
     <section className="post-show-container">
       <h2>{post.title}</h2>
-      <p>
+      <p className="post-info">
+        Asked{" "}
         {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
       </p>
       <div dangerouslySetInnerHTML={{ __html: post.body }} />
       <p>{post.user_id}</p>
       {user._id === post.user_id && (
-        <button id="delete" onClick={handleDelete}>
-          DELETE
+        <button id="delete" onClick={handleDelete} className="button">
+          Delete
         </button>
       )}
       <form>

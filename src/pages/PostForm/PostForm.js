@@ -1,5 +1,5 @@
 //react
-import { useState } from "react";
+import { useState, useEffect } from "react";
 //react-router-dom
 import { useNavigate } from "react-router-dom";
 //custom hook
@@ -9,7 +9,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 //styles
-import "../../index.scss"
+import "../../index.scss";
 
 const NewPostForm = ({ URL }) => {
   const { dispatch } = usePostsContext();
@@ -23,6 +23,10 @@ const NewPostForm = ({ URL }) => {
   });
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
+
+  useEffect(() => {
+    document.body.style.background = "#e6e6e6";
+  });
 
   const handleChange = (event) => {
     setNewForm((prevForm) => ({
