@@ -9,21 +9,26 @@ import { usePostsContext } from "../../hooks/usePostsContext";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 const PostShow = ({ URL }) => {
-  const { posts, dispatch } = usePostsContext();
+  const { dispatch } = usePostsContext();
   const { user } = useAuthContext();
 
   const { id } = useParams();
-  const post = posts.find((p) => p._id === id);
-  // rendering issues when there is no logged in user
-  // const isUser = user._id === post.user_id;
-  const [editForm, setEditForm] = useState(post);
+  const [post, setPost] = useState(null);
+  const [editForm, setEditForm] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     document.body.style.background = "white";
-  }, []);
+    const getPost = async () => {
+      const response = await fetch(`${URL}posts/${id}`);
+      const data = await response.json();
+      setPost(data);
+      setEditForm(data);
+    };
+    getPost();
+  }, [URL, id]);
 
   const handleChange = (event) => {
     setEditForm({ ...editForm, [event.target.name]: event.target.value });
@@ -53,7 +58,7 @@ const PostShow = ({ URL }) => {
     const data = await response.json();
 
     if (response.ok) {
-      dispatch({ type: "DELETE_WORKOUT", payload: data });
+      dispatch({ type: "DELETE_POST", payload: data });
     }
     navigate("/");
   };
@@ -74,12 +79,22 @@ const PostShow = ({ URL }) => {
     const response = await fetch(`${URL}posts/${id}`, {
       method: "PUT",
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${user.token}`,
       },
+      body: JSON.stringify(editForm),
     });
 
     const data = await response.json();
+
+    if (response.ok) {
+      dispatch({ type: "UPDATE_POST", payload: data });
+    }
   };
+
+  if (!post) {
+    return <h1>Loading</h1>;
+  }
 
   return (
     <section className="post-show-container">
@@ -95,14 +110,17 @@ const PostShow = ({ URL }) => {
           <button id="delete" onClick={handleDelete} className="button">
             Delete
           </button>
-          <button id="edit" onClick={()=> setIsEditing(!isEditing)} className="button">
+          <button
+            id="edit"
+            onClick={() => setIsEditing(!isEditing)}
+            className="button"
+          >
             Edit
           </button>
         </>
       )}
       {isEditing && (
-        <form>
-          {/* onSubmit={handleSubmit} */}
+        <form onSubmit={handleEdit}>
           <input
             type="text"
             value={editForm.title}
@@ -117,6 +135,9 @@ const PostShow = ({ URL }) => {
             placeholder="body"
             onChange={handleChange}
           />
+          <button type="submit" className="button">
+            Submit
+          </button>
         </form>
       )}
     </section>

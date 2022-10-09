@@ -17,6 +17,12 @@ export const postsReducer = (state, action) => {
       return {
         posts: state.posts.filter((p) => p._id !== action.payload._id),
       };
+    case "UDPATE_POST":
+      const index = state.posts.findIndex((p) => p._id);
+      state.posts.splice(index, 1, action.payload);
+      return {
+        posts: [...state.posts],
+      };
     default:
       return state;
   }
@@ -24,7 +30,7 @@ export const postsReducer = (state, action) => {
 
 export const PostsContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(postsReducer, {
-    posts: null,
+    posts: [],
   });
 
   return (
