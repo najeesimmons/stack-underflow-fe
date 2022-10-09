@@ -7,15 +7,19 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import { usePostsContext } from "../../hooks/usePostsContext";
 //date fns
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { UPDATE_POST } from "../../context/PostsContext";
 
 const PostShow = ({ URL }) => {
-  const { dispatch } = usePostsContext();
+  const { dispatch, posts } = usePostsContext();
   const { user } = useAuthContext();
 
   const { id } = useParams();
-  const [post, setPost] = useState(null);
-  const [editForm, setEditForm] = useState(null);
+  const postFromState = posts.find((post) => post._id === id);
+
+  const [post, setPost] = useState(postFromState ?? null);
+  const [editForm, setEditForm] = useState(postFromState ?? null);
   const [isEditing, setIsEditing] = useState(false);
+  const isUser = user?._id === post?.user_id;
 
   const navigate = useNavigate();
 
@@ -28,9 +32,17 @@ const PostShow = ({ URL }) => {
       setPost(data);
       setEditForm(data);
     };
+    if (!postFromState) {
+      getPost();
+    }
+  }, [URL, id, postFromState]);
 
-    getPost();
-  }, [URL, id]);
+  useEffect(() => {
+    if (postFromState) {
+      setPost(postFromState);
+      setEditForm(postFromState)
+    }
+  }, [postFromState]);
 
   const handleChange = (event) => {
     setEditForm({ ...editForm, [event.target.name]: event.target.value });
@@ -65,14 +77,15 @@ const PostShow = ({ URL }) => {
     navigate("/");
   };
 
-  const handleEdit = async () => {
+  const handleEdit = async (e) => {
+    e.preventDefault();
     if (!user) {
       // throw Error
       console.log("You must be logged in to delete a post.");
       return;
     }
 
-    if (!user._id === post.user_id) {
+    if (!isUser) {
       //throw Error
       console.log("You're not authorized to delete this post.");
       return;
@@ -88,9 +101,9 @@ const PostShow = ({ URL }) => {
     });
 
     const data = await response.json();
-
+    console.log("response:", response.ok);
     if (response.ok) {
-      dispatch({ type: "UPDATE_POST", payload: data });
+      dispatch({ type: UPDATE_POST, payload: data });
     }
   };
 
@@ -107,7 +120,7 @@ const PostShow = ({ URL }) => {
       </p>
       <div dangerouslySetInnerHTML={{ __html: post.body }} />
       <p>{post.user_id}</p>
-      {user._id === post.user_id && (
+      {isUser && (
         <>
           <button id="delete" onClick={handleDelete} className="button">
             Delete
