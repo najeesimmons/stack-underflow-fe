@@ -24,9 +24,11 @@ const PostShow = ({ URL }) => {
     const getPost = async () => {
       const response = await fetch(`${URL}posts/${id}`);
       const data = await response.json();
+
       setPost(data);
       setEditForm(data);
     };
+
     getPost();
   }, [URL, id]);
 
@@ -117,28 +119,28 @@ const PostShow = ({ URL }) => {
           >
             Edit
           </button>
+          {isEditing && (
+            <form onSubmit={handleEdit}>
+              <input
+                type="text"
+                value={editForm.title}
+                name="title"
+                placeholder="title"
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                value={editForm.body}
+                name="body"
+                placeholder="body"
+                onChange={handleChange}
+              />
+              <button type="submit" className="button">
+                Submit
+              </button>
+            </form>
+          )}
         </>
-      )}
-      {isEditing && (
-        <form onSubmit={handleEdit}>
-          <input
-            type="text"
-            value={editForm.title}
-            name="title"
-            placeholder="title"
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            value={editForm.body}
-            name="body"
-            placeholder="body"
-            onChange={handleChange}
-          />
-          <button type="submit" className="button">
-            Submit
-          </button>
-        </form>
       )}
     </section>
   );
